@@ -1,0 +1,7 @@
+<!--index.wxml-->
+<view>
+    <view class="search-view">
+        <view class="search-icon"></view>
+        <view>搜索关键词</view>
+    </view>
+</view>
