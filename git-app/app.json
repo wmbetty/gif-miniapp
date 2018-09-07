@@ -1,12 +1,14 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/details/details"
+    "pages/details/details",
+    "pages/search/search",
+    "pages/getprize/getprize"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#000000",
-    "navigationBarTitleText": "抖图",
+    "navigationBarTitleText": "抖图搞笑动态图撩人表情包",
     "navigationBarTextStyle": "white",
     "navigationStyle": "custom"
   }

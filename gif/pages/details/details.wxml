@@ -1,7 +1,0 @@
-<!--pages/details/details.wxml-->
-<view>
-    <view class="header">
-        <view>抖图</view>
-        <image src="" class="back-icon"></image>
-    </view>
-</view>

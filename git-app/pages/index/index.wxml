@@ -1,0 +1,39 @@
+<!--index.wxml-->
+<view>
+    <!--phX-search-view-->
+    <view wx:if="{{!isX}}" class="{{isAndrod?'search-view andr-top':'search-view'}}" bindtap="goSearch">
+        <image src="../../images/search_icon.png" class="search-icon"></image>
+        <view>搜索关键词</view>
+    </view>
+    <view wx:if="{{isX}}" class="search-view phX-search-view" bindtap="goSearch">
+        <image src="../../images/search_icon.png" class="search-icon"></image>
+        <view>搜索关键词</view>
+    </view>
+    <scroll-view scroll-x="true" class="{{isX?'tab-h phX-tab-h':'tab-h'}}" scroll-left="{{scrollLeft}}" wx:if="{{cateList.length}}">
+        <view wx:for="{{cateList}}" wx:key="index" class="tab-item {{currentTab==index?'active':''}}" data-cid="{{item.category_id}}"  data-current="{{index}}" bindtap="swichNav">{{item.category_name}}</view>
+    </scroll-view>
+    <swiper class="{{isX?'tab-content phX-tab-content':'tab-content'}}" current="{{currentTab}}" duration="300" bindchange="switchTab"
+            style="height:{{winHeight-70}}px" wx:if="{{imgList.length}}">
+        <swiper-item wx:for="{{cateList}}" wx:key="index">
+            <scroll-view scroll-y="true" class="scoll-h" style="height:{{winHeight-110}}px" bindscrolltolower="scrolltolower">
+                <block wx:for="{{imgList}}" wx:key="index">
+                    <!--<view wx:if="{{index===0}}" class="first-item" data-imgid="{{item.images_id}}" bindtap="goDetail">-->
+                        <!--<image src="{{item.img_url || '../../images/default_img.png'}}" wx:if="{{index===0}}" class="first-img"></image>-->
+                    <!--</view>-->
+                    <view class="same-scroll-item">
+                        <view class="img-container" data-imgid="{{item.images_id}}" bindtap="goDetail">
+                            <image src="{{item.img_url || '../../images/default_img.png'}}" class="img-item" mode="aspectFit"></image>
+                        </view>
+                        <view class="gif-info">
+                            <view>
+                                <view class="info-tag" wx:for="{{item.tag}}" wx:key="index" data-tname="{{item.tag_name}}" bindtap="gotoSearch">{{item.tag_name}}</view>
+                            </view>
+                            <view class="gif-time"></view>
+                        </view>
+                    </view>
+                </block>
+            </scroll-view>
+        </swiper-item>
+    </swiper>
+</view>
+<image src="../../images/getprize_icon.png" class="reward-icon" bindtap="goReward"></image>

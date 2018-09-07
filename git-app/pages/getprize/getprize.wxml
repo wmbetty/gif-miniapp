@@ -1,0 +1,78 @@
+
+<view class="page">
+    <view class="banner-view">
+        <image src="../../images/reward_banner.png" class="r-banner"></image>
+        <view class="{{isX?'header phX-header':'header'}}">
+            <view class="header-icons">
+                <image src="../../images/yellow_back.png" class="back-icon" bindtap="goBack"></image>
+                <image src="../../images/home_icon.png" class="home-icon" bindtap="goHome"></image>
+            </view>
+        </view>
+    </view>
+    <view class="nineGrid" wx:if="{{showContent}}">
+        <image src="../../images/reward_bg.png" class="bg-img"></image>
+        <view class="row">
+            <view wx:for="{{prizeList}}" wx:if="{{index<=2}}" wx:key="key" class="{{pindex===index?'row-item active':'row-item'}}">
+                <view class="{{pindex===index?'wrapper active':'wrapper'}}">
+                    <image class="{{item.name!=='谢谢参与'?'reward-icon':'xiexie'}}" src="{{item.img_url}}"></image>
+                    <view class="reward-text" wx:if="{{item.name!=='谢谢参与'}}">{{item.name}}</view>
+                </view>
+                <!--<view class="mask"></view>-->
+            </view>
+        </view>
+        <view class="row">
+            <view wx:for="{{prizeList}}" wx:if="{{index===3}}" wx:key="key" class="{{pindex===3?'row-item active':'row-item'}}">
+                <view class="{{pindex===3?'wrapper active':'wrapper'}}">
+                    <image class="{{item.name!=='谢谢参与'?'reward-icon':'xiexie'}}" src="{{item.img_url}}"></image>
+                    <view class="reward-text" wx:if="{{item.name!=='谢谢参与'}}">{{item.name}}</view>
+                </view>
+                <!--<view class="mask"></view>-->
+            </view>
+            <view class="row-item orange" bindtap="startLottery">
+                <view class="yellow">
+                    <view style="margin-top: 20rpx;">立即</view>
+                    <view>抽奖</view>
+                </view>
+            </view>
+            <view wx:for="{{prizeList}}" wx:if="{{index===4}}" wx:key="key" class="{{pindex===4?'row-item active':'row-item'}}">
+                <view class="{{pindex===4?'wrapper active':'wrapper'}}">
+                    <image class="{{item.name!=='谢谢参与'?'reward-icon':'xiexie'}}" src="{{item.img_url}}"></image>
+                    <view class="reward-text" wx:if="{{item.name!=='谢谢参与'}}">{{item.name}}</view>
+                </view>
+                <!--<view class="mask"></view>-->
+            </view>
+        </view>
+        <view class="row">
+            <view wx:for="{{prizeList}}" wx:if="{{index>=5}}" wx:key="index" class="{{pindex===index?'row-item active':'row-item'}}">
+                <view class="{{pindex===index?'wrapper active':'wrapper'}}">
+                    <image class="{{item.name!=='谢谢参与'?'reward-icon':'xiexie'}}" src="{{item.img_url}}"></image>
+                    <view class="reward-text" wx:if="{{item.name!=='谢谢参与'}}">{{item.name}}</view>
+                </view>
+                <!--<view class="mask"></view>-->
+            </view>
+        </view>
+    </view>
+
+    <view class="reward-infos" wx:if="{{showContent}}">
+        <view class="record-infos" wx:if="recordList.length>0">
+            <view class="info-title">我的奖品</view>
+            <view class="yellow-color" wx:for="{{recordList}}" wx:key="index">{{item.name}}  {{item.created_time}}</view>
+        </view>
+        <view class="infos-cont">
+            <view class="info-title">抽奖说明</view>
+            <view>1. 每个用户每3小时可抽奖一次</view>
+            <view>2. 中奖后请联系客服（微信：Tiniyx）领取奖品</view>
+            <view>3. 《抖图》官方拥有最终解释权；</view>
+        </view>
+    </view>
+</view>
+<dialog-wxml dialog-show="{{showDialog}}" bind:cancelDialog="cancelDialog" bind:confirmDialog="confirmDialog"></dialog-wxml>
+<view class="{{showReward?'reward-mask reward-in':'reward-mask reward-out'}}" wx:if="{{showReward}}" catchtouchmove='{{true}}'>
+    <image src="../../images/prize_pic.png" class="reward-dialog"></image>
+    <view class="{{isHighView?'reward-dialog-infos reward-dialog-infos-high':'reward-dialog-infos'}}">
+        <view class="reward-dialog-title">中奖噜</view>
+        <view class="y-gift">{{rewardText}}</view>
+        <view class="get-gift-info">领奖方式查看 底部说明</view>
+    </view>
+    <image class="close-dialog-icon" src="../../images/close_dialog.png" bindtap="closeDialog"></image>
+</view>

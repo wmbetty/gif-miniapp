@@ -1,0 +1,41 @@
+<!--pages/search/search.wxml-->
+<view>
+    <view class="{{isX?'header phX-header':'header'}}">
+        <view class="header-icons">
+            <image src="../../images/yellow_back.png" class="back-icon" bindtap="goBack"></image>
+            <image src="../../images/home_icon.png" class="home-icon" bindtap="goHome"></image>
+        </view>
+    </view>
+    <view class="{{isX?'s-content phX-s-content':'s-content'}}">
+        <view class="search-box">
+            <view class="s-content-left">
+                <image class="search-icon" src="../../images/search_icon.png"></image>
+                <input type="text" value="{{searchText}}" class="search-input" placeholder="搜索关键词" placeholder-style="color:#f4f4f4;" focus="{{focus}}" bindinput="inputPut" bindblur="inputBlur" bindfocus="inputFocus" />
+            </view>
+            <image class="close-icon" src="../../images/close_icon.png" hidden="{{!isSearchText}}" bindtap="clearText"></image>
+        </view>
+        <view class="search-tag-box" wx:if="{{showTags}}">
+            <view class="search-tag" wx:for="{{tagList}}" wx:key="{{index}}" data-word="{{item.tag_name}}" bindtap="gosearch">{{item.tag_name}}</view>
+        </view>
+        <view class="tab-content" style="height:{{winHeight-70}}px" wx:if="{{imgList.length>0}}">
+            <scroll-view scroll-y="true" class="scoll-h" style="height:{{winHeight-120}}px" bindscrolltolower="scrolltolower">
+                <view wx:for="{{imgList}}" wx:key="index">
+                    <!--<view wx:if="{{index===0}}" class="first-item" data-imgid="{{item.images_id}}" bindtap="goDetail">-->
+                        <!--<image src="{{item.images.img_url || '../../images/default_img.png'}}" wx:if="{{index===0}}" class="first-img"></image>-->
+                    <!--</view>-->
+                    <view class="same-scroll-item">
+                        <view class="img-container" data-imgid="{{item.images_id}}" bindtap="goDetail">
+                            <image src="{{item.images.img_url || '../../images/default_img.png'}}" class="img-item" mode="aspectFit"></image>
+                        </view>
+                        <view class="gif-info">
+                            <view>
+                                <view class="info-tag" wx:for="{{item.images.tag}}" wx:key="index" data-tname="{{item.tag_name}}" bindtap="gotoSearch">{{item.tag_name}}</view>
+                            </view>
+                            <view class="gif-time"></view>
+                        </view>
+                    </view>
+                </view>
+            </scroll-view>
+        </view>
+    </view>
+</view>
