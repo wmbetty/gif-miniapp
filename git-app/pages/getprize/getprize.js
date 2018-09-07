@@ -21,7 +21,9 @@ Page({
     isHighView: false,
     isX: false,
     recordList: [],
-    nextTips: false
+    nextTips: false,
+    canReward: true,
+    nextTime: ''
   },
   onLoad: function () {
     let that = this;
@@ -32,7 +34,11 @@ Page({
         let rewardItemApi = backApi.rewardItemApi+token;
         Api.wxRequest(rewardItemApi,'GET',{},(res)=>{
           if (res.data.status*1===200) {
-            that.setData({prizeList: res.data.data,showContent: true})
+            let last_time = res.data.data.last_time;
+            that.setData({prizeList: res.data.data.reward,showContent: true})
+            if (last_time!=='') {
+              that.setData({canReward: false,nextTime:last_time})
+            }
           } else {
             Api.wxShowToast('奖品数据获取失败','none',2000)
           }
@@ -89,79 +95,84 @@ Page({
     let that = this;
     let times = that.data.times;
     let speed = that.data.speed;
-    setTimeout(()=>{
-      let userInfo = wx.getStorageSync('userInfo');
-      if (userInfo.id) {
-        let listItem = that.data.prizeList;
-        let tips = ''
-        that.setData({
-          times: times+=1 // 转动次数
-        });
-        that.oneRoll()  // 转动过程调用的每一次转动方法，这里是第一次调用初始化
-        // 如果当前转动次数达到要求 && 目前转到的位置是中奖位置
-        if (that.data.times > that.data.cycle + 10 && that.data.prize === that.data.pindex) {
-          clearTimeout(that.data.timer)   // 清除转动定时器，停止转动
+    let canReward = that.data.canReward;
+    if (canReward) {
+      setTimeout(()=>{
+        let userInfo = wx.getStorageSync('userInfo');
+        if (userInfo.id) {
+          let listItem = that.data.prizeList;
+          let tips = ''
           that.setData({
-            prize: -1,
-            times: 0,
-            click: true,
-            showToast: true
-          })
-          console.log('你已经中奖了', '000')
-        } else {
-          if (that.data.times < that.data.cycle) {
+            times: times+=1 // 转动次数
+          });
+          that.oneRoll()  // 转动过程调用的每一次转动方法，这里是第一次调用初始化
+          // 如果当前转动次数达到要求 && 目前转到的位置是中奖位置
+          if (that.data.times > that.data.cycle + 10 && that.data.prize === that.data.pindex) {
+            clearTimeout(that.data.timer)   // 清除转动定时器，停止转动
             that.setData({
-              speed: speed -= 10 // 加快转动速度
+              prize: -1,
+              times: 0,
+              click: true,
+              showToast: true
             })
-          } else if (that.data.times === that.data.cycle) {    // 随机获得一个中奖位置
-            let lotteryApi = backApi.lotteryApi+that.data.token;
-            Api.wxRequest(lotteryApi,'GET',{}, (res)=>{
-              if (res.data.status*1===200) {
-                let reward_code = res.data.data.prize.code;
-                if (res.data.data.prize.name==='谢谢参与') {
-                  tips = '谢谢参与，下次抽奖时间为三小时后';
-                  wx.showToast({ title: tips, icon: 'none' });
-                  clearTimeout(that.data.timer)   // 清除转动定时器，停止转动
-                  that.setData({
-                    pindex: that.data.prizeList.length-1,nextTips: true
-                  });
-                } else {
-                  for (let i=0; i<listItem.length;i++) {
-                    if (listItem[i].code===reward_code) {
-                      that.setData({prize: i})
+            console.log('你已经中奖了', '000')
+          } else {
+            if (that.data.times < that.data.cycle) {
+              that.setData({
+                speed: speed -= 10 // 加快转动速度
+              })
+            } else if (that.data.times === that.data.cycle) {    // 随机获得一个中奖位置
+              let lotteryApi = backApi.lotteryApi+that.data.token;
+              Api.wxRequest(lotteryApi,'GET',{}, (res)=>{
+                if (res.data.status*1===200) {
+                  let reward_code = res.data.data.prize.code;
+                  if (res.data.data.prize.name==='谢谢参与') {
+                    tips = '谢谢参与，下次抽奖时间为三小时后';
+                    wx.showToast({ title: tips, icon: 'none' });
+                    clearTimeout(that.data.timer)   // 清除转动定时器，停止转动
+                    that.setData({
+                      pindex: that.data.prizeList.length-1,nextTips: true
+                    });
+                  } else {
+                    for (let i=0; i<listItem.length;i++) {
+                      if (listItem[i].code===reward_code) {
+                        that.setData({prize: i})
+                      }
                     }
+                    setTimeout(()=>{
+                      that.setData({showReward: true,rewardText: res.data.data.prize.name});
+                    },2800)
                   }
+                } else {
                   setTimeout(()=>{
-                    that.setData({showReward: true,rewardText: res.data.data.prize.name});
+                    clearTimeout(that.data.timer)   // 清除转动定时器，停止转动
+                    that.setData({
+                      pindex: that.data.prizeList.length-1,nextTips: true
+                    });
+                    Api.wxShowToast(res.data.msg,'none',2000)
                   },2800)
                 }
-              } else {
-                setTimeout(()=>{
-                  clearTimeout(that.data.timer)   // 清除转动定时器，停止转动
-                  that.setData({
-                    pindex: that.data.prizeList.length-1,nextTips: true
-                  });
-                  Api.wxShowToast(res.data.msg,'none',2000)
-                },2800)
-              }
-            })
-          } else if (that.data.times > that.data.cycle + 10 &&
-            ((that.data.prize === 0 && that.data.pindex === 7) || that.data.prize === that.data.pindex + 1)) {
-            that.setData({speed: speed+=110})
-          } else {
-            that.setData({speed: speed+=20})
+              })
+            } else if (that.data.times > that.data.cycle + 10 &&
+              ((that.data.prize === 0 && that.data.pindex === 7) || that.data.prize === that.data.pindex + 1)) {
+              that.setData({speed: speed+=110})
+            } else {
+              that.setData({speed: speed+=20})
+            }
+            if (that.data.speed < 40) {
+              that.setData({speed: 40})
+            }
+            that.setData({timer: setTimeout(that.startRoll, that.data.speed)})
           }
-          if (that.data.speed < 40) {
-            that.setData({speed: 40})
-          }
-          that.setData({timer: setTimeout(that.startRoll, that.data.speed)})
+        } else {
+          that.setData({
+            showDialog: true
+          })
         }
-      } else {
-        that.setData({
-          showDialog: true
-        })
-      }
-    },200)
+      },200)
+    } else {
+      wx.showToast({ title: `下次抽奖时间为${that.data.nextTime}`, icon: 'none' });
+    }
   },
   // 每一次转动
   oneRoll () {
