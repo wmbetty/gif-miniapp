@@ -1,7 +1,7 @@
 const Api = require('wxApi');
 
-const http = "https://fabu.gif.79643.com/"
-// const http = "https://gif.79643.com/"
+// const http = "https://fabu.gif.79643.com/"
+const http = "https://gif.79643.com/"
 
 const loginApi = `${http}v1/member/login`
 const imgListApi = `${http}v1/images?access-token=`
