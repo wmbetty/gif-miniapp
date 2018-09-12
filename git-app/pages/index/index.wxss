@@ -32,6 +32,8 @@ page{position: relative;}
   background: url("https://gifres.79643.com/mini_gif/2018/09/06/default_img.png") no-repeat center;
 }
 .img-item{max-width: 100%;max-height: 100%;display: block;}
+/*opacity: 0;transition: opacity 1s linear 2s;*/
+.loaded{opacity: 1}
 .gif-info{
   display: flex;justify-content: space-between;align-items: center;font-size: 28rpx;color: #C7C7CC;
 }

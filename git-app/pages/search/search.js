@@ -22,7 +22,7 @@ Page({
         that.setData( {
           winHeight: clientHeight
         });
-        if (res.model==='iPhone X') {
+        if (res.model.indexOf('iPhone X') != -1) {
           that.setData({isX: true})
         }
       }
@@ -34,8 +34,7 @@ Page({
           that.setData({tagList: res.data.data})
         }
       } else {
-        wx.hideLoading();
-        wx.showToast({ title: '标签获取失败', icon: 'none' })
+        Api.wxShowToast('标签获取失败~', 'none', 2000);
       }
     })
     if (tname) {
@@ -53,12 +52,12 @@ Page({
           if (res.data.data.length>0) {
             that.setData({imgList: res.data.data,page: 1,keywords: tname})
           } else {
-            wx.showToast({ title: '暂未搜到结果', icon: 'none' })
+            Api.wxShowToast('暂未搜到结果~', 'none', 2000);
             that.setData({imgList: [],page: 1})
           }
         } else {
           wx.hideLoading();
-          wx.showToast({ title: '搜索失败', icon: 'none' })
+          Api.wxShowToast('搜索失败~', 'none', 2000);
         }
       })
     }
@@ -121,12 +120,12 @@ Page({
           if (res.data.data.length>0) {
             that.setData({imgList: res.data.data,page: 1,keywords: text,showTags: false})
           } else {
-            wx.showToast({ title: '暂未搜到结果', icon: 'none' })
+            Api.wxShowToast('暂未搜到结果~', 'none', 2000);
             that.setData({imgList: [],page: 1})
           }
         } else {
           wx.hideLoading();
-          wx.showToast({ title: '搜索失败', icon: 'none' })
+          Api.wxShowToast('搜索失败~', 'none', 2000);
         }
       })
     }
@@ -143,10 +142,10 @@ Page({
           imgList = imgList.concat(res.data.data);
           that.setData({imgList: imgList,page: page})
         } else {
-          wx.showToast({ title: '没有更多了', icon: 'none' })
+          Api.wxShowToast('没有更多了~', 'none', 2000);
         }
       } else {
-        wx.showToast({ title: '图片获取失败', icon: 'none' })
+        Api.wxShowToast('图片获取失败~', 'none', 2000);
       }
     })
   },
@@ -168,10 +167,10 @@ Page({
         if (res.data.data.length>0) {
           that.setData({imgList: res.data.data, showTags: false})
         } else {
-          wx.showToast({ title: '该标签暂无数据', icon: 'none' })
+          Api.wxShowToast('该标签暂无数据~', 'none', 2000);
         }
       } else {
-        wx.showToast({ title: '图片获取失败', icon: 'none' })
+        Api.wxShowToast('图片获取失败~', 'none', 2000);
       }
     })
   },
@@ -199,11 +198,11 @@ Page({
           if (res.data.data.length>0) {
             that.setData({imgList: res.data.data, showTags: false})
           } else {
-            wx.showToast({ title: '该标签暂无数据', icon: 'none' })
+            Api.wxShowToast('该标签暂无数据~', 'none', 2000);
           }
         } else {
           wx.hideLoading();
-          wx.showToast({ title: '图片获取失败', icon: 'none' })
+          Api.wxShowToast('图片获取失败~', 'none', 2000);
         }
       })
     },200)

@@ -19,15 +19,4 @@
             </swiper-item>
         </block>
     </swiper>
-
-    <!--<view class="d-content" style="height: {{winHeight-65}}px;">-->
-        <!--<imgae src="" class="img-item" mode="aspectFit"></imgae>-->
-        <!--<view class="cont-botom">-->
-            <!--<view class="d-title"># 热点TOP</view>-->
-            <!--<view class="tag-view">-->
-                <!--<view class="d-tag">汪星人</view>-->
-                <!--<view class="d-tag">biubiubiu</view>-->
-            <!--</view>-->
-        <!--</view>-->
-    <!--</view>-->
 </view>

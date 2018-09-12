@@ -4,11 +4,6 @@ const Api = require('../../utils/wxApi');
 Page({
   data: {
     winHeight: 0,
-    imgUrls: [
-      'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
-      'http://pic.58pic.com/58pic/13/66/58/20258PICpDh_1024.png'
-    ],
     imgid: '',
     imgList: [],
     isX: false
@@ -23,7 +18,7 @@ Page({
         that.setData( {
           winHeight: clientHeight,
         });
-        if (res.model==='iPhone X') {
+        if (res.model.indexOf('iPhone X') != -1) {
           that.setData({isX: true})
         }
       }
@@ -40,10 +35,22 @@ Page({
         Api.wxRequest(imageViewApi,'GET',{images_id: options.imgid},(res)=>{
           if (res.data.status*1===200) {
             wx.hideLoading();
-            that.setData({imgList: res.data.data})
+            that.setData({imgList: res.data.data});
+            if (res.data.data.length>1) {
+              Api.wxShowToast('左右滑动看更多动图~', 'none', 2300);
+            }
           } else {
             wx.hideLoading();
-            wx.showToast({ title: '获取数据失败', icon: 'none' })
+            Api.wxShowToast('获取数据失败~', 'none', 2000);
+          }
+        })
+        let imgShareApi = backApi.imgShareApi+token;
+        Api.wxRequest(imgShareApi,'GET',{},(res)=>{
+          if (res.data.status*1===200) {
+            that.setData({share_img: res.data.data.share_img})
+          } else {
+            console.log('分享图片获取失败')
+            // Api.wxShowToast('图片获取失败~', 'none', 2000);
           }
         })
       }
@@ -54,10 +61,11 @@ Page({
   onReachBottom: function () {},
   onShareAppMessage: function () {
     let that = this;
-    let imgid = that.data.imgid
+    let imgid = that.data.imgid;
     return {
       title: '抖图搞笑动态图撩人表情包',
       path: `/pages/index/index?imgid=${imgid}`,
+      imageUrl: that.data.share_img,
       success() {
         Api.wxShowToast('分享成功~', 'none', 2000);
       },

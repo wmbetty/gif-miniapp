@@ -31,6 +31,7 @@ page{position: relative;background: #111}
     text-align: center;line-height: 60rpx;padding: 0 34rpx;display: inline-block;margin-bottom: 20rpx;
 }
 .tab-content{position: fixed;left: 0;top: 240rpx;width: 100%;}
+.phX-tab-content{top: 270rpx;}
 .first-item{
     width: 100%;height: 480rpx;margin-bottom: 20rpx;
 }

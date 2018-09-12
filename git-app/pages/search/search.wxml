@@ -17,7 +17,7 @@
         <view class="search-tag-box" wx:if="{{showTags}}">
             <view class="search-tag" wx:for="{{tagList}}" wx:key="{{index}}" data-word="{{item.tag_name}}" bindtap="gosearch">{{item.tag_name}}</view>
         </view>
-        <view class="tab-content" style="height:{{winHeight-70}}px" wx:if="{{imgList.length>0}}">
+        <view class="{{isX?'tab-content phX-tab-content':'tab-content'}}" style="height:{{winHeight-70}}px" wx:if="{{imgList.length>0}}">
             <scroll-view scroll-y="true" class="scoll-h" style="height:{{winHeight-120}}px" bindscrolltolower="scrolltolower">
                 <view wx:for="{{imgList}}" wx:key="index">
                     <!--<view wx:if="{{index===0}}" class="first-item" data-imgid="{{item.images_id}}" bindtap="goDetail">-->

@@ -14,6 +14,7 @@ const tagListApi = `${http}v1/tag`
 const rewardItemApi = `${http}v1/reward?access-token=`
 const lotteryApi = `${http}v1/reward/lottery?access-token=`
 const rewardRecordApi = `${http}v1/reward/record?access-token=`
+const imgShareApi = `${http}v1/images/share?access-token=`
 
 function getToken(){
   return new Promise(function(resolve,reject){
@@ -28,7 +29,7 @@ function getToken(){
             resolve(res)
           })
         } else {
-          wx.showToast({ title: '登录失败', icon: 'none' })
+          Api.wxShowToast('登录失败~', 'none', 2000);
         }
       }
     });
@@ -47,5 +48,6 @@ module.exports = {
   tagListApi: tagListApi,
   rewardItemApi: rewardItemApi,
   lotteryApi: lotteryApi,
-  rewardRecordApi: rewardRecordApi
+  rewardRecordApi: rewardRecordApi,
+  imgShareApi: imgShareApi
 }

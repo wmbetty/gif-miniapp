@@ -7,13 +7,6 @@ Page({
     winHeight:"",//窗口高度
     currentTab:0, //预设当前项的值
     scrollLeft:0, //tab标题的滚动条位置
-    expertList:[{ //假数据
-      img:"avatar.png",
-      name:"欢顔",
-      tag:"知名情感博主",
-      answer:134,
-      listen:2234
-    }],
     token: '',
     cateList: [],
     imgList: [],
@@ -49,11 +42,11 @@ Page({
               // let totalpage1 = res.header['X-Pagination-Page-Count'];
               that.setData({imgList: res.data.data,page: 1})
             } else {
-              wx.showToast({ title: '暂无数据', icon: 'none' })
+              Api.wxShowToast('暂无数据~', 'none', 2000);
             }
           } else {
             wx.hideLoading();
-            wx.showToast({ title: '图片获取失败', icon: 'none' })
+            Api.wxShowToast('图片获取失败~', 'none', 2000);
           }
         })
       },200)
@@ -81,11 +74,11 @@ Page({
             // let totalpage1 = res.header['X-Pagination-Page-Count'];
             that.setData({imgList: res.data.data,page: 1})
           } else {
-            wx.showToast({ title: '暂无数据', icon: 'none' })
+            Api.wxShowToast('暂无数据~', 'none', 2000);
           }
         } else {
           wx.hideLoading();
-          wx.showToast({ title: '图片获取失败', icon: 'none' })
+          Api.wxShowToast('图片获取失败~', 'none', 2000);
         }
       })
     }
@@ -117,7 +110,7 @@ Page({
     let imgid= options.imgid;
     var that = this;
     //  高度自适应
-    wx.getSystemInfo( {
+    wx.getSystemInfo({
       success: function( res ) {
         var clientHeight=res.windowHeight;
         that.setData( {
@@ -127,7 +120,7 @@ Page({
         if (model.indexOf('iPhone') == -1) {
           that.setData({isAndrod: true})
         }
-        if (model==='iPhone X') {
+        if (model.indexOf('iPhone X') !=-1) {
           that.setData({isX: true})
         }
       }
@@ -149,7 +142,7 @@ Page({
             that.setData({cateList: list})
           } else {
             wx.hideLoading();
-            wx.showToast({ title: '分类获取失败', icon: 'none' })
+            Api.wxShowToast('分类获取失败~', 'none', 2000);
           }
         })
         setTimeout(()=>{
@@ -159,13 +152,22 @@ Page({
               // let totalpage1 = res.header['X-Pagination-Page-Count'];
               that.setData({imgList: res.data.data,page: 1})
             } else {
-              wx.showToast({ title: '图片获取失败', icon: 'none' })
+              Api.wxShowToast('图片获取失败~', 'none', 2000);
             }
           })
         },500)
+        let imgShareApi = backApi.imgShareApi+token;
+        Api.wxRequest(imgShareApi,'GET',{},(res)=>{
+          if (res.data.status*1===200) {
+            that.setData({share_img: res.data.data.share_img})
+          } else {
+            console.log('分享图片获取失败')
+            // Api.wxShowToast('图片获取失败~', 'none', 2000);
+          }
+        })
       } else {
         wx.hideLoading();
-        wx.showToast({ title: 'token获取失败', icon: 'none' })
+        Api.wxShowToast('token获取失败~', 'none', 2000);
       }
     })
     if (imgid) {
@@ -195,10 +197,10 @@ Page({
           imgList = imgList.concat(res.data.data);
           that.setData({imgList: imgList,page: page})
         } else {
-          wx.showToast({ title: '没有更多了', icon: 'none' })
+          Api.wxShowToast('没有更多了~', 'none', 2000);
         }
       } else {
-        wx.showToast({ title: '图片获取失败', icon: 'none' })
+        Api.wxShowToast('图片n获取失败~', 'none', 2000);
       }
     })
   },
@@ -222,14 +224,13 @@ Page({
   onShareAppMessage: function () {
     let that = this;
     return {
-      title: '抖图搞笑动态图撩人表情包',
       path: `/pages/index/index`,
+      imageUrl: that.data.share_img,
       success() {
         Api.wxShowToast('分享成功~', 'none', 2000);
       },
       fail() {},
       complete() {}
     }
-
   }
 })

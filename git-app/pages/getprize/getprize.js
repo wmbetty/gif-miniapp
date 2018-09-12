@@ -51,6 +51,15 @@ Page({
             Api.wxShowToast('获奖记录获取失败','none',2000)
           }
         });
+        let imgShareApi = backApi.imgShareApi+token;
+        Api.wxRequest(imgShareApi,'GET',{},(res)=>{
+          if (res.data.status*1===200) {
+            that.setData({share_img: res.data.data.share_img})
+          } else {
+            console.log('分享图片获取失败')
+            // Api.wxShowToast('图片获取失败~', 'none', 2000);
+          }
+        })
       }
     })
     wx.getSystemInfo( {
@@ -62,7 +71,7 @@ Page({
             isHighView: true
           })
         }
-        if (res.model==='iPhone X') {
+        if (res.model.indexOf('iPhone X') != -1) {
           that.setData({isX: true})
         }
       }
@@ -128,7 +137,7 @@ Page({
                   let reward_code = res.data.data.prize.code;
                   if (res.data.data.prize.name==='谢谢参与') {
                     tips = '谢谢参与，下次抽奖时间为三小时后';
-                    wx.showToast({ title: tips, icon: 'none' });
+                    Api.wxShowToast(tips, 'none', 2000);
                     clearTimeout(that.data.timer)   // 清除转动定时器，停止转动
                     that.setData({
                       pindex: that.data.prizeList.length-1,nextTips: true
@@ -145,7 +154,7 @@ Page({
                   }
                 } else {
                   setTimeout(()=>{
-                    clearTimeout(that.data.timer)   // 清除转动定时器，停止转动
+                    clearTimeout(that.data.timer);   // 清除转动定时器，停止转动
                     that.setData({
                       pindex: that.data.prizeList.length-1,nextTips: true
                     });
@@ -171,7 +180,7 @@ Page({
         }
       },200)
     } else {
-      wx.showToast({ title: `下次抽奖时间为${that.data.nextTime}`, icon: 'none' });
+      Api.wxShowToast(`下次抽奖时间为${that.data.nextTime}`, 'none', 2000);
     }
   },
   // 每一次转动
@@ -189,6 +198,7 @@ Page({
     return {
       title: '参与抽奖',
       path: `/pages/gcindex/gcindex`,
+      imageUrl: this.data.share_img,
       success() {
         Api.wxShowToast('分享成功~', 'none', 2000);
       },
