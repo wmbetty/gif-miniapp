@@ -1,0 +1,51 @@
+/* pages/search/search.wxss */
+page{position: relative;background: #111}
+.header{
+    width: 100%;height: 64rpx;
+    position: fixed;left: 0;top: -16rpx;padding-top: 64rpx;
+
+}
+.phX-header{top:24rpx;}
+.header-icons{
+    width: 160rpx;height: 100%;background: #000;
+    display: flex;align-items: center;margin-left: 72rpx;padding-left: 24rpx;border-radius: 30rpx;
+}
+.back-icon{width: 38rpx;height: 38rpx;margin-right: 56rpx;}
+.home-icon{width: 38rpx;height: 38rpx;}
+.s-content{padding: 40rpx;margin-top: 116rpx;}
+.phX-s-content{margin-top: 146rpx;}
+.search-box{
+    background: #222;width: 670rpx;height: 60rpx;color: #F4F4F4;font-size: 28rpx;
+    display: flex;align-items: center;justify-content: space-between;border-radius: 30rpx;margin-bottom: 40rpx;
+}
+.close-icon{width: 36rpx;height: 36rpx;margin-right: 20rpx;}
+.s-content-left{
+    display: flex;align-items: center;
+}
+.search-icon{width: 32rpx;height: 32rpx;margin-right: 20rpx;margin-left: 30rpx;}
+.search-input{
+    width: 534rpx;
+}
+.search-tag{
+    height: 60rpx;border-radius: 30rpx;border: 1px solid #DD7632;color: #DD7632;margin-right: 30rpx;
+    text-align: center;line-height: 60rpx;padding: 0 34rpx;display: inline-block;margin-bottom: 20rpx;
+}
+.tab-content{position: fixed;left: 0;top: 240rpx;width: 100%;}
+.phX-tab-content{top: 270rpx;}
+.first-item{
+    width: 100%;height: 480rpx;margin-bottom: 20rpx;
+}
+.first-img{width: 100%;height: 100%;background: #888;display: block}
+.same-scroll-item{
+    background: #222;padding: 30rpx 46rpx 26rpx;border-bottom: 1px solid #000;
+}
+.img-container{
+    width: 658rpx;height: 428rpx;margin-bottom: 38rpx;display: flex;align-items: center;justify-content: center;
+    background: url("https://gifres.79643.com/mini_gif/2018/09/06/default_img.png") no-repeat center;
+}
+.img-item{max-width: 100%;max-height: 100%;display: block;}
+.gif-info{
+    display: flex;justify-content: space-between;align-items: center;font-size: 28rpx;color: #C7C7CC;
+}
+.gif-time{color: #888;font-size: 24rpx;}
+.info-tag{display: inline-block;margin-right: 30rpx;}

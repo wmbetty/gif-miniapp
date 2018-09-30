@@ -1,22 +1,34 @@
 /* pages/search/search.wxss */
-page{position: relative;background: #111}
+page{position: relative;background: #F5F6F8}
 .header{
-    width: 100%;height: 64rpx;
-    position: fixed;left: 0;top: -16rpx;padding-top: 64rpx;
-
+    width: 100%;height: 128rpx;background: #FFE745;
+    position: fixed;left: 0;top: 0;z-index: 99
 }
-.phX-header{top:24rpx;}
+.phX-header{height: 160rpx;}
+.andr-header{height: 152rpx;}
 .header-icons{
-    width: 160rpx;height: 100%;background: #000;
-    display: flex;align-items: center;margin-left: 72rpx;padding-left: 24rpx;border-radius: 30rpx;
+    width: 160rpx;height: 60rpx;background: rgba(255, 255, 255, 0.3);
+    display: flex;align-items: center;margin-left: 40rpx;padding-left: 24rpx;border-radius: 30rpx;margin-top: 56rpx;
 }
+.pxh-header-icons{margin-top: 84rpx}
+.andr-header-icons{margin-top: 76rpx}
 .back-icon{width: 38rpx;height: 38rpx;margin-right: 56rpx;}
 .home-icon{width: 38rpx;height: 38rpx;}
-.s-content{padding: 40rpx;margin-top: 116rpx;}
-.phX-s-content{margin-top: 146rpx;}
+.s-content{
+  /* padding: 40rpx; */
+  margin-top: 116rpx;
+}
+/* .phX-s-content{margin-top: 146rpx;} */
+.andr-s-content{margin-top: 130rpx;}
+.search-fffbg{position: fixed;padding-left: 40rpx;top: 146rpx;height: 60rpx;width: 100%;background: #F5F6F8;z-index: 99}
+.showlist-search-fffbg{top: 126rpx;padding-top: 16rpx;padding-bottom: 16rpx;}
+.phx-search-fffbg{top: 180rpx;}
+.andr-search-fffbg{top: 148rpx;}
+.phx-searched-bar{top: 160rpx;}
 .search-box{
-    background: #222;width: 670rpx;height: 60rpx;color: #F4F4F4;font-size: 28rpx;
-    display: flex;align-items: center;justify-content: space-between;border-radius: 30rpx;margin-bottom: 40rpx;
+    background: #fff;width: 670rpx;height: 60rpx;color: #888;font-size: 28rpx;
+    display: flex;align-items: center;justify-content: space-between;border-radius: 30rpx;
+    position: fixed;
 }
 .close-icon{width: 36rpx;height: 36rpx;margin-right: 20rpx;}
 .s-content-left{
@@ -27,25 +39,44 @@ page{position: relative;background: #111}
     width: 534rpx;
 }
 .search-tag{
-    height: 60rpx;border-radius: 30rpx;border: 1px solid #DD7632;color: #DD7632;margin-right: 30rpx;
+    height: 60rpx;border-radius: 30rpx;border: 1px solid #FD697B;color: #FD697B;margin-right: 30rpx;font-size: 32rpx;
     text-align: center;line-height: 60rpx;padding: 0 34rpx;display: inline-block;margin-bottom: 20rpx;
 }
-.tab-content{position: fixed;left: 0;top: 240rpx;width: 100%;}
-.phX-tab-content{top: 270rpx;}
+.tab-content{
+  /* position: fixed;left: 0;top: 240rpx; */
+  margin-top: 220rpx;
+  width: 100%;
+}
+.phX-tab-content{margin-top: 270rpx;}
+.andr-tab-content{margin-top: 240rpx;}
 .first-item{
     width: 100%;height: 480rpx;margin-bottom: 20rpx;
 }
 .first-img{width: 100%;height: 100%;background: #888;display: block}
 .same-scroll-item{
-    background: #222;padding: 30rpx 46rpx 26rpx;border-bottom: 1px solid #000;
+    padding: 30rpx 46rpx 0;background: #fff;margin-bottom: 10rpx;max-height: 580rpx;overflow-y: hidden;
 }
 .img-container{
     width: 658rpx;height: 428rpx;margin-bottom: 38rpx;display: flex;align-items: center;justify-content: center;
-    background: url("https://gifres.79643.com/mini_gif/2018/09/06/default_img.png") no-repeat center;
+    /* background: url("https://gifres.79643.com/mini_gif/2018/10/01/loading.gif") no-repeat;
+    background-size: 100% 100%; */
 }
 .img-item{max-width: 100%;max-height: 100%;display: block;}
 .gif-info{
     display: flex;justify-content: space-between;align-items: center;font-size: 28rpx;color: #C7C7CC;
 }
 .gif-time{color: #888;font-size: 24rpx;}
-.info-tag{display: inline-block;margin-right: 30rpx;}
+.info-tag{display: inline-block;margin-right: 30rpx;color: #FD697B;margin-bottom: 24rpx;}
+.gif-operations{
+  display: flex;justify-content: space-between;
+}
+button{padding: 0;border-radius: 0;}
+button::after{border: none}
+.operate-btn{
+  width: 40rpx;height: 40rpx;margin-bottom: 24rpx;
+}
+.operate-btn:first-child{margin-right: 44rpx;}
+.operate-btn-img{display: block;width: 100%;height: 100%}
+.search-tag-box{margin-top: 238rpx;padding-left: 40rpx;}
+.phx-search-tag-box{margin-top: 260rpx;}
+.andr-search-tag-box{margin-top: 244rpx;}

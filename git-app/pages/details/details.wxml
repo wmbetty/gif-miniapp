@@ -1,22 +1,35 @@
 <!--pages/details/details.wxml-->
-<view>
-    <view class="{{isX?'header phX-header':'header'}}">
-        <view class="header-icons">
-            <image src="../../images/yellow_back.png" class="back-icon" bindtap="goBack"></image>
-            <image src="../../images/home_icon.png" class="home-icon" bindtap="goHome"></image>
+<view style="height: {{winHeight}}px;position: relative;width: 100%;">
+    <view wx:if="{{!isIphoneLiuhai}}" class="{{isAnDrLiuhai?'header andr-header':'header'}}">
+        <view class="{{isAnDrLiuhai?'header-icons andr-header-icons':'header-icons'}}">
+            <image src="../../images/back_icon.png" class="back-icon" catchtap="goBack"></image>
+            <image src="../../images/home_icon.png" class="home-icon" catchtap="goHome"></image>
         </view>
     </view>
-    <swiper duration="{{300}}" class="d-content" style="height: {{winHeight-65}}px;" wx:if="{{imgList}}">
-        <block wx:for="{{imgList}}" wx:key="index">
-            <swiper-item class="swiper-item" data-img="{{item.img_url}}" bindtap="previewImg">
-                <image src="{{item.img_url || '../../images/default_img.png'}}" class="img-item" mode="widthFix" />
-                <view class="cont-botom">
-                    <view class="d-title"># {{item.category_name}}</view>
-                    <view class="tag-view">
-                        <view class="d-tag" wx:for="{{item.tag}}" wx:key="index" data-tname="{{item.tag_name}}" catchtap="gotoSearch">{{item.tag_name}}</view>
-                    </view>
+    <view wx:if="{{isIphoneLiuhai}}" class="header phX-header">
+        <view class="header-icons pxh-header-icons">
+            <image src="../../images/back_icon.png" class="back-icon" catchtap="goBack"></image>
+            <image src="../../images/home_icon.png" class="home-icon" catchtap="goHome"></image>
+        </view>
+    </view>
+    <swiper duration="{{300}}" class="d-content" style="height: {{winHeight}}px;" hidden="{{!showSwiper}}" bindchange="change">
+        <block class="sw-block" wx:for="{{imgList}}" style="height: {{winHeight}}px;" wx:key="index">
+            <swiper-item class="swiper-item" data-img="{{item.image}}" catchtap="previewImg">
+                <view class="img-outer-conts">
+                  <image src="{{item.image || '../../images/default_img.png'}}" class="img-item" mode="widthFix" />
                 </view>
             </swiper-item>
         </block>
     </swiper>
+    <view class="cont-botom" style="width:{{winWidth-40}}px;">
+        <view class="tag-view">
+            <view class="d-tag" wx:for="{{item.tag}}" wx:key="index" data-tname="{{item.tag_name}}" catchtap="gotoSearch">{{item.tag_name}}</view>
+        </view>
+        <view class="gif-operations">
+          <image src="../../images/download_icon.png" class="operate-btn" data-img="{{item.image}}" catchtap="downloadGif" />
+          <button class="operate-btn" data-img="{{item.image}}" catchtap="shareGif">
+            <image src="../../images/share_icon.png" class="operate-btn-img" />
+          </button>
+        </view>
+    </view>
 </view>

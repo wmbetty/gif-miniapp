@@ -34,8 +34,6 @@ App({
     })
   },
   globalData: {
-    userInfo: null,
-    isAnDrLiuhai: false,
-    isIphoneLiuhai: false
+    userInfo: null
   }
 })
