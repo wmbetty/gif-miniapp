@@ -1,4 +1,7 @@
 //app.js
+const backApi = require('utils/util');
+var aldstat = require("utils/ald-stat.js");
+
 App({
   onLaunch: function () {
     // 展示本地存储能力
@@ -32,6 +35,20 @@ App({
         }
       }
     })
+  },
+  onShow () {
+    let that = this
+    wx.login({
+      success: function(res) {
+        if (res.code) {
+          backApi.getToken().then(function(res) {
+            if (res.data.status*1===200) {
+              that.aldstat.sendOpenid(res.data.data.openid)
+            }
+          })
+        }
+      }
+    });
   },
   globalData: {
     userInfo: null,

@@ -155,6 +155,9 @@ Page({
     let that = this;
     let text = e.detail.value;
     if (text !== '') {
+      app.aldstat.sendEvent(`输入关键字-${text}-搜索`,{
+        play : ""
+      });
       that.setData({
         searchText: text,
         isSearchText: true
@@ -216,6 +219,9 @@ Page({
     let keyord = that.data.keywords;
     let imgList = that.data.imgList;
     let sApi = backApi.searchApi;
+    app.aldstat.sendEvent(`搜索页查看更多`,{
+      play : ""
+    });
     Api.wxRequest(sApi,'GET',{page: page,keywords:keyord},(res)=>{
       if (res.data.status*1===200) {
         if (res.data.data.length>0) {
@@ -241,6 +247,9 @@ Page({
     let that = this;
     that.setData({
       page: 1,keywords: word,searchText: word
+    });
+    app.aldstat.sendEvent(`查看-${word}-标签下的动图`,{
+      play : ""
     });
     Api.wxRequest(sApi,'GET',{page: 1,keywords:word},(res)=>{
       if (res.data.status*1===200) {

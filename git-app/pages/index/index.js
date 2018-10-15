@@ -40,123 +40,17 @@ Page({
       }
     })
   },
-  // 滚动切换标签样式
-  // switchTab:function(e){
-  //   let that = this;
-  //   let cateList = that.data.cateList;
-  //   let current = e.detail.current;
-  //   that.setData({
-  //     currentTab:current
-  //   });
-  //   that.checkCor();
-  //
-  //   if(that.data.currentTaB==current){return false;}
-  //   else {
-  //     for (let i=0;i<cateList.length;i++) {
-  //       if (i===current) {
-  //         that.setData({cate_id: cateList[i].category_id})
-  //       }
-  //     }
-  //     setTimeout(()=>{
-  //       wx.showLoading({
-  //         title: '加载中',
-  //         mask: true
-  //       });
-  //       let imgListApi = backApi.imgListApi+that.data.token;
-  //       Api.wxRequest(imgListApi,'GET',{page: 1,category_id: that.data.cate_id},(res)=>{
-  //         if (res.data.status*1===200) {
-  //           wx.hideLoading();
-  //           if (res.data.data.length>0) {
-  //             // let totalpage1 = res.header['X-Pagination-Page-Count'];
-  //             that.setData({imgList: res.data.data,page: 1})
-  //           } else {
-  //             Api.wxShowToast('暂无数据~', 'none', 2000);
-  //           }
-  //         } else {
-  //           wx.hideLoading();
-  //           Api.wxShowToast('图片获取失败~', 'none', 2000);
-  //         }
-  //       })
-  //     },200)
-  //   }
-  // },
-  // 点击标题切换当前页时改变样式
-  // swichNav:function(e){
-  //   let that = this;
-  //   var cur=e.target.dataset.current;
-  //   let cid = e.currentTarget.dataset.cid;
-  //   if(that.data.currentTaB==cur){return false;}
-  //   else{
-  //     that.setData({
-  //       currentTab:cur,page: 1,cate_id: cid
-  //     });
-  //     wx.showLoading({
-  //       title: '加载中',
-  //       mask: true
-  //     })
-  //     let imgListApi = backApi.imgListApi+that.data.token;
-  //     Api.wxRequest(imgListApi,'GET',{page: 1,category_id: cid},(res)=>{
-  //       if (res.data.status*1===200) {
-  //         wx.hideLoading();
-  //         if (res.data.data.length>0) {
-  //           // let totalpage1 = res.header['X-Pagination-Page-Count'];
-  //           that.setData({imgList: res.data.data,page: 1})
-  //         } else {
-  //           Api.wxShowToast('暂无数据~', 'none', 2000);
-  //         }
-  //       } else {
-  //         wx.hideLoading();
-  //         Api.wxShowToast('图片获取失败~', 'none', 2000);
-  //       }
-  //     })
-  //   }
-  // },
-  //判断当前滚动超过一屏时，设置tab标题滚动条。
-  checkCor:function(){
-    if (this.data.currentTab<=4){
-      this.setData({
-        scrollLeft:0
-      })
-    }
-    if (this.data.currentTab>4){
-      this.setData({
-        scrollLeft:400
-      })
-    }
-    if (this.data.currentTab>=6) {
-      this.setData({
-        scrollLeft:600
-      })
-    }
-    if (this.data.currentTab>=8) {
-      this.setData({
-        scrollLeft:800
-      })
-    }
-  },
   onLoad: function (options) {
     let imgid= options.imgid;
     var that = this;
-    // let list = [{'category_name':'推荐','category_id': ''}];
     backApi.getToken().then(function (res) {
       if (res.data.status*1===200) {
         let token = res.data.data.access_token;
         that.setData({token: token});
-        // let cateApi = backApi.categoryApi+token;
         wx.showLoading({
           title: '加载中',
           mask: true
         })
-        // Api.wxRequest(cateApi,'GET',{},(res)=>{
-        //   if (res.data.status*1===200) {
-        //     wx.hideLoading();
-        //     list = list.concat(res.data.data)
-        //     that.setData({cateList: list})
-        //   } else {
-        //     wx.hideLoading();
-        //     Api.wxShowToast('分类获取失败~', 'none', 2000);
-        //   }
-        // })
         setTimeout(()=>{
           let imgListApi = backApi.imgListApi+token;
           let recommendTagApi = backApi.recommendTagApi+token;
@@ -170,7 +64,6 @@ Page({
           })
           Api.wxRequest(imgListApi,'GET',{page: 1},(res)=>{
             if (res.data.status*1===200) {
-              // let totalpage1 = res.header['X-Pagination-Page-Count'];
               setTimeout(()=> {
                 wx.hideLoading();
                 that.setData({imgList: res.data.data,page: 1})
@@ -271,6 +164,9 @@ Page({
     let tid = that.data.tid;
     let arr = that.data.arr;
     let moreArr = [];
+    app.aldstat.sendEvent(`首页页查看更多`,{
+      play : ""
+    });
     Api.wxRequest(imgListApi,'GET',{page: page, tag_id: tid},(res)=>{
       if (res.data.status*1===200) {
         if (res.data.data.length>0) {
@@ -290,13 +186,16 @@ Page({
   },
   goDetail (e) {
     let imgid = e.currentTarget.dataset.imgid;
+    app.aldstat.sendEvent(`查看详情`,{
+      play : ""
+    });
     wx.navigateTo({
       url: `/pages/details/details?imgid=${imgid}`
     })
   },
   goReward () {
     wx.navigateTo({
-      url: `/pages/getprize/getprize`
+      url: `/pages/applist/applist`
     })
   },
   gotoSearch (e) {
@@ -312,6 +211,9 @@ Page({
       imageUrl: that.data.share_img,
       success() {
         Api.wxShowToast('分享成功~', 'none', 2000);
+        app.aldstat.sendEvent(`首页分享小程序`,{
+          play : ""
+        });
       },
       fail() {},
       complete() {}
@@ -328,6 +230,9 @@ Page({
               filePath: res.tempFilePath,
               success: function (res) {
                 Api.wxShowToast('已保存到相册', 'none', 2000);
+                app.aldstat.sendEvent(`下载动图`,{
+                  play : ""
+                });
               },
               fail: function (err) {
                 console.log(err, 'err')
@@ -360,32 +265,12 @@ Page({
     }
   },
   getList (e) {
-    console.log(e, 'ee')
     let tname = e.currentTarget.dataset.tname;
+    app.aldstat.sendEvent(`查看${tname}-标签下的动图`,{
+      play : ""
+    });
     wx.navigateTo({
       url: '/pages/search/search?tname='+tname
     })
-    // let that = this;
-    // let tid = e.currentTarget.dataset.tid;
-    // let imgListApi = backApi.imgListApi+that.data.token;
-    // that.setData({imgList: [],page: 1})
-    // wx.showLoading({
-    //   title: '加载中',
-    //   mask: true
-    // });
-    // Api.wxRequest(imgListApi,'GET',{page: 1,tag_id: tid},(res)=>{
-    //   if (res.data.status*1===200) {
-    //     wx.hideLoading();
-    //     if (res.data.data.length>0) {
-    //       // let totalpage1 = res.header['X-Pagination-Page-Count'];
-    //       that.setData({imgList: res.data.data,page: 1, tid: tid})
-    //     } else {
-    //       Api.wxShowToast('暂无数据~', 'none', 2000);
-    //     }
-    //   } else {
-    //     wx.hideLoading();
-    //     Api.wxShowToast('图片获取失败~', 'none', 2000);
-    //   }
-    // })
   }
 })

@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/details/details",
     "pages/search/search",
-    "pages/getprize/getprize"
+    "pages/getprize/getprize",
+    "pages/applist/applist"
   ],
   "window": {
     "backgroundTextStyle": "light",

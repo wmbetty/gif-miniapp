@@ -17,6 +17,7 @@ const lotteryApi = `${http}v1/reward/lottery?access-token=`
 const rewardRecordApi = `${http}v1/reward/record?access-token=`
 const imgShareApi = `${http}v1/images/share?access-token=`
 const recommendTagApi = `${http}v1/tag/recommend?access-token=`
+const miniprogramApi = `${http}v1/miniprogram`
 
 function getToken(){
   return new Promise(function(resolve,reject){
@@ -52,5 +53,6 @@ module.exports = {
   lotteryApi: lotteryApi,
   rewardRecordApi: rewardRecordApi,
   imgShareApi: imgShareApi,
-  recommendTagApi: recommendTagApi
+  recommendTagApi: recommendTagApi,
+  miniprogramApi: miniprogramApi
 }

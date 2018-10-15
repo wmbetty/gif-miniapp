@@ -82,4 +82,5 @@
     </swiper> -->
 </view>
 <!-- <image src="../../images/getprize_icon.png" class="reward-icon" bindtap="goReward"></image> -->
+<image src="../../images/more_btn.png" class="reward-icon" catchtap="goReward"></image>
 <dialog-wxml dialog-show="{{showDialog}}" open-type="{{openType}}" auth-info="{{authInfo}}" bind:cancelDialog="cancelDialog" bind:confirmDialog="confirmDialog"></dialog-wxml>
